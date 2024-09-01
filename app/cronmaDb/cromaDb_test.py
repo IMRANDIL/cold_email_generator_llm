@@ -11,4 +11,10 @@ collection.add(
 )
 
 all_doc = collection.get()
-print(all_doc)
+
+resut = collection.query(
+    query_texts=["Query is about the cairo"],
+    n_results=2
+)
+
+print(resut)
