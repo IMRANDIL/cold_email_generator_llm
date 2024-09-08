@@ -1,13 +1,16 @@
 import pandas as pd
 import uuid
 from prompt_util.prompt_util import generate_prompt
-from langchain_core.output_parsers import JsonOutputParser
 from cronmaDb.cromaDb_setup import initialize_clients
+from utils.write_email_prompt import write_mail
 import logging
 
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
+
+def get_query_links(collection, skills):
+    return collection.query(query_texts=skills, n_results=2).get('metadatas', [])
 
 def main():
     try:
@@ -35,18 +38,16 @@ def main():
                 logging.warning("Skipping row with empty 'Techstack': %s", row)
 
         # Output DataFrame and parsed result
-        result = generate_prompt()
-        print(result)
-        json_parser = JsonOutputParser()
-        json_res = json_parser.parse(result)
-        skills = json_res['skills']
-        # print(skills)
-        # all_doc = collection.get()
-        query_links = collection.query(query_texts=skills, n_results=2).get('metadatas', [])
-        # print(df)
-        # print(all_doc)
-        # print(type(json_res))
-        # print(query_links)
+        jobs = generate_prompt()
+        # print(result)
+        # json_parser = JsonOutputParser()
+        # jobs = json_parser.parse(result)
+        for job in jobs:
+                skills = job.get('skills', [])
+                links = get_query_links(collection=collection, skills=skills)
+                email = write_mail(job=job, links=links, username='Ali')
+                print(email)
+        
     except Exception as e:
         logging.error("An error occurred: %s", e)
 

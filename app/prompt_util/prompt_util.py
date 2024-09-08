@@ -3,6 +3,8 @@
 from langchain_core.prompts import PromptTemplate
 from web_scrapping.web_scrapp import scrape_page
 from langchain_integration.langchain_test import create_llm_instance
+from langchain_core.exceptions import OutputParserException
+from langchain_core.output_parsers import JsonOutputParser
 
 
 
@@ -50,4 +52,13 @@ def generate_prompt():
     # Substitute the page data into the prompt template
     prompt_with_data = chain_extract.invoke(input={'page_data': page_data})
 
-    return prompt_with_data.content
+    # Parsing the result and ensuring it's returned as a list
+    try:
+        json_parser = JsonOutputParser()
+        res = json_parser.parse(prompt_with_data.content)
+    except OutputParserException:
+        raise OutputParserException("Context too big. Unable to parse jobs.")
+    
+    # Return as a list or wrap in a list if it's a single item
+    return res if isinstance(res, list) else [res]
+
