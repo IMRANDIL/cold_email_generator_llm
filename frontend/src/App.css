@@ -106,6 +106,15 @@
 }
 
 
+.error-message {
+  color: #d9534f; /* Bootstrap red, or you can use a different color */
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: left; /* Aligns the text to the left */
+}
+
+
 
 /* Container for the copy button */
 .copy-container {

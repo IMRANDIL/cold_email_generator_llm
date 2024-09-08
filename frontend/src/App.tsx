@@ -50,6 +50,7 @@ const App = () => {
                     username={username}
                     setUsername={setUsername}
                     loading={loading}
+                    email={email}
                 />
                 {loading && (
                     <div className="loader-container">
