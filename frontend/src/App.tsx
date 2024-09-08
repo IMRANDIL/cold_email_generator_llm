@@ -14,11 +14,6 @@ const App = () => {
         setLoading(true);
         setDelayMessage(false);
 
-        // Show the delay message after 15 seconds
-        const timer = setTimeout(() => {
-            setDelayMessage(true);
-        }, 15000);
-
         try {
             const generatedEmail = await generateEmail(username);
             setEmail(generatedEmail);
@@ -26,15 +21,36 @@ const App = () => {
         } catch (error) {
             alert('An error occurred while generating the email.');
         } finally {
-            clearTimeout(timer);
             setLoading(false);
         }
     };
 
+    useEffect(() => {
+        let timer;
+
+        if (loading) {
+            timer = setTimeout(() => {
+                setDelayMessage(true);
+            }, 15000); // Show delay message after 15 seconds
+        }
+
+        // Cleanup timeout when loading state changes or component unmounts
+        return () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+        };
+    }, [loading]);
+
     return (
         <div className="app">
             <div className="container">
-                <EmailForm onGenerateEmail={handleGenerateEmail} username={username} setUsername={setUsername} loading={loading} />
+                <EmailForm
+                    onGenerateEmail={handleGenerateEmail}
+                    username={username}
+                    setUsername={setUsername}
+                    loading={loading}
+                />
                 {loading && (
                     <div className="loader-container">
                         <div className="spinner"></div>

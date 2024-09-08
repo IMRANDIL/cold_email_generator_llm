@@ -70,6 +70,7 @@
 /* src/components/EmailDisplay.css */
 .email-display {
   margin-top: 20px;
+  position: relative;
   padding: 20px;
   background: #f9f9f9;
   border-radius: 8px;
@@ -86,7 +87,6 @@
 }
 
 .email-container {
-  position: relative;
   background: #333;
   color: #f5f5f5;
   padding: 15px;
@@ -104,20 +104,48 @@
   word-wrap: break-word; /* Break long words and lines */
 }
 
-.copy-btn {
+/* Container for the copy button */
+.copy-container {
+  text-align: right;
+  margin-top: 10px;
   position: absolute;
-  top: 15px;
+  top: 0px;
   right: 15px;
+}
+
+/* Style for the copy button */
+.copy-btn {
   background-color: #007bff;
-  color: #fff;
+  color: #f8f8f2;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 4px;
+  margin: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.reresh-btn{
+  background-color: #3e3e3e;
+  color: #f8f8f2;
+  border: none;
+  padding: 7px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .copy-btn:hover {
-  background-color: #0056b3;
+  background-color: #5a5a5a;
+}
+
+.copy-btn:focus {
+  outline: none;
+}
+
+/* Button animation when copying */
+.copy-btn.copied {
+  background-color: #4caf50;
+  color: white;
 }
