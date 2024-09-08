@@ -13,6 +13,10 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+# Initialize clients and get the persistent client
+_, chroma_persistent_client = initialize_clients()
+        
+
 def get_query_links(collection, skills):
     return collection.query(query_texts=skills, n_results=2).get('metadatas', [])
 
@@ -24,26 +28,24 @@ def generate_email():
         username = data.get("username", "Ali")  # Default to 'Ali' if not provided
         
         # Read CSV file into DataFrame
-        df = pd.read_csv("my_portfolio.csv")
+        # df = pd.read_csv("my_portfolio.csv")
         
-        # Initialize clients and get the persistent client
-        _, chroma_persistent_client = initialize_clients()
-        
+      
         # Get or create the collection
         collection = chroma_persistent_client.get_or_create_collection(name="portfolio")
         
         # Add documents to the collection
-        for _, row in df.iterrows():
-            techstack = row.get("Techstack", "")
-            links = row.get("Links", "")
-            if techstack:
-                collection.add(
-                    documents=[techstack],
-                    metadatas={"links": links},
-                    ids=[str(uuid.uuid4())]
-                )
-            else:
-                logging.warning("Skipping row with empty 'Techstack': %s", row)
+        # for _, row in df.iterrows():
+        #     techstack = row.get("Techstack", "")
+        #     links = row.get("Links", "")
+        #     if techstack:
+        #         collection.add(
+        #             documents=[techstack],
+        #             metadatas={"links": links},
+        #             ids=[str(uuid.uuid4())]
+        #         )
+        #     else:
+        #         logging.warning("Skipping row with empty 'Techstack': %s", row)
         
         # Generate job data
         jobs = generate_prompt()
