@@ -18,7 +18,7 @@ def write_mail(job, links, username):
         Do not provide any preamble or irrelevant information. Remember, you are {username}, a Software Engineer focused 
         on results and client satisfaction.
 
-        ### EMAIL (NO PREAMBLE):
+        ### EMAIL (NO PREAMBLE, NO EXTRA NEWLINES AFTER "complimentary close"):
         """
     )
     llm = create_llm_instance()

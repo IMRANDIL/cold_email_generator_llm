@@ -2,8 +2,8 @@
 .app {
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 80vh;
+  align-items: flex-start;
+  min-height: 100vh;
   background-color: #f0f2f5;
   padding: 20px;
 }
@@ -15,6 +15,7 @@
   padding: 20px;
   width: 100%;
   max-width: 800px;
+  height: auto;
 }
 
 .loading {
@@ -98,11 +99,13 @@
 .email-content {
   font-family: 'Courier New', Courier, monospace;
   font-size: 16px;
-  line-height: 1.4; /* Adjust line height to reduce gaps */
+  line-height: 1.6; /* Adjust line height to reduce gaps */
   margin: 0; /* Remove default margins */
   white-space: pre-wrap; /* Ensure newlines are preserved */
   word-wrap: break-word; /* Break long words and lines */
 }
+
+
 
 /* Container for the copy button */
 .copy-container {
