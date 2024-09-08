@@ -1,10 +1,14 @@
 from langchain_groq import ChatGroq
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 def create_llm_instance():
     llm = ChatGroq(
         model="llama-3.1-70b-versatile",
         temperature=0,
-        groq_api_key='gsk_a**********************************'
+        groq_api_key= os.getenv('GROQ_API_KEY')
         # other params...
     )
     return llm

@@ -2,8 +2,9 @@ import pandas as pd
 import uuid
 from prompt_util.prompt_util import generate_prompt
 from langchain_core.output_parsers import JsonOutputParser
-from cronmaDb.chromadb_setup import initialize_clients
+from cronmaDb.cromaDb_setup import initialize_clients
 import logging
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -35,12 +36,17 @@ def main():
 
         # Output DataFrame and parsed result
         result = generate_prompt()
+        print(result)
         json_parser = JsonOutputParser()
         json_res = json_parser.parse(result)
-        
-        print(df)
-        print(type(json_res))
-        
+        skills = json_res['skills']
+        # print(skills)
+        # all_doc = collection.get()
+        query_links = collection.query(query_texts=skills, n_results=2).get('metadatas', [])
+        # print(df)
+        # print(all_doc)
+        # print(type(json_res))
+        # print(query_links)
     except Exception as e:
         logging.error("An error occurred: %s", e)
 
