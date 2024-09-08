@@ -1,9 +1,9 @@
 // src/components/EmailForm.jsx
-import { useState } from 'react';
 
 
-const EmailForm = ({ onGenerateEmail }) => {
-    const [username, setUsername] = useState('');
+
+const EmailForm = ({ onGenerateEmail, username, setUsername, loading }) => {
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,10 +22,11 @@ const EmailForm = ({ onGenerateEmail }) => {
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Enter your name"
                     className="input"
+                    disabled={loading}
                     required
                 />
             </div>
-            <button type="submit" className="btn">
+            <button type="submit" className="btn" disabled={loading}>
                 Generate Email
             </button>
         </form>
